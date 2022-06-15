@@ -1,1 +1,1 @@
-# python_project_example
+# Repository for python training
