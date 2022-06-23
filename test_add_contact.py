@@ -14,10 +14,16 @@ class TestAddContact(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.create_contact(wd)
-        # переход на домашнюю страницу
-        wd.find_element(by=By.LINK_TEXT, value="home").click()
+        self.return_to_first_page(wd)
+        self.logout(wd)
+
+    def logout(self, wd):
         # выход из учетной записи
         wd.find_element(by=By.LINK_TEXT, value="Logout").click()
+
+    def return_to_first_page(self, wd):
+        # возврат на первую страницу
+        wd.find_element(by=By.LINK_TEXT, value="home").click()
 
     def create_contact(self, wd):
         # начало создания нового контакта
