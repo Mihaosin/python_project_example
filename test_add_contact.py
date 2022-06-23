@@ -15,6 +15,16 @@ class TestAddContact(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.create_contact(wd, Contact(firstname="Vasia", lastname="Petrov", address="Texas", email="perov@adress.book"))
+        # тест добавления пустого контакта
+        #self.create_contact(wd, Contact(firstname="", lastname="", address="", email=""))
+        self.return_to_first_page(wd)
+        self.logout(wd)
+
+    def test_add_empty_contact(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.login(wd, username="admin", password="secret")
+        self.create_contact(wd, Contact(firstname="", lastname="", address="", email=""))
         self.return_to_first_page(wd)
         self.logout(wd)
 
