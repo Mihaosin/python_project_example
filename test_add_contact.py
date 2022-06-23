@@ -13,7 +13,7 @@ class TestAddContact(unittest.TestCase):
         wd = self.wd
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.create_contact(wd)
+        self.create_contact(wd, firstname="Vasia", lastname="Petrov", address="Texas", email="perov@adress.book")
         self.return_to_first_page(wd)
         self.logout(wd)
 
@@ -25,22 +25,22 @@ class TestAddContact(unittest.TestCase):
         # возврат на первую страницу
         wd.find_element(by=By.LINK_TEXT, value="home").click()
 
-    def create_contact(self, wd):
+    def create_contact(self, wd, firstname, lastname, address, email):
         # начало создания нового контакта
         wd.find_element(by=By.LINK_TEXT, value="add new").click()
         # заполнение свойств котакта
         wd.find_element(by=By.NAME, value="firstname").click()
         wd.find_element(by=By.NAME, value="firstname").clear()
-        wd.find_element(by=By.NAME, value="firstname").send_keys("Vasia")
+        wd.find_element(by=By.NAME, value="firstname").send_keys(firstname)
         wd.find_element(by=By.NAME, value="lastname").click()
         wd.find_element(by=By.NAME, value="lastname").clear()
-        wd.find_element(by=By.NAME, value="lastname").send_keys("Petrov")
+        wd.find_element(by=By.NAME, value="lastname").send_keys(lastname)
         wd.find_element(by=By.NAME, value="address").click()
         wd.find_element(by=By.NAME, value="address").clear()
-        wd.find_element(by=By.NAME, value="address").send_keys("Texas")
+        wd.find_element(by=By.NAME, value="address").send_keys(address)
         wd.find_element(by=By.NAME, value="email").click()
         wd.find_element(by=By.NAME, value="email").clear()
-        wd.find_element(by=By.NAME, value="email").send_keys("perov@adress.book")
+        wd.find_element(by=By.NAME, value="email").send_keys(email)
         # завершение создания котакта
         wd.find_element(by=By.NAME, value="submit").click()
 
