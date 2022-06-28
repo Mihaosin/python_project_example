@@ -16,28 +16,29 @@ class TestAddGroup(unittest.TestCase):
         self.wd.implicitly_wait(30)
 
     def test_add_group(self):
-        wd = self.wd
-        self.login(wd, username="admin", password="secret")
-        self.create_group(wd, Group(name="third", header="header", footer="footer"))
-        self.logout(wd)
+        self.login(username="admin", password="secret")
+        self.create_group(Group(name="third", header="header", footer="footer"))
+        self.logout()
 
     def test_add_empty_group(self):
-        wd = self.wd
-        self.login(wd, username="admin", password="secret")
-        self.create_group(wd, Group(name="", header="", footer=""))
-        self.logout(wd)
+        self.login(username="admin", password="secret")
+        self.create_group(Group(name="", header="", footer=""))
+        self.logout()
 
-    def logout(self, wd):
+    def logout(self):
+        wd = self.wd
         # выход из учетной записи
         wd.find_element(by=By.LINK_TEXT, value="Logout").click()
 
-    def return_to_groups_page(self, wd):
+    def return_to_groups_page(self):
+        wd = self.wd
         # возврат на страницу "Группы"
         wd.find_element(by=By.LINK_TEXT, value="groups").click()
 
-    def create_group(self, wd, group):
+    def create_group(self, group):
+        wd = self.wd
         # начало создания новой группы
-        self.open_groups_page(wd)
+        self.open_groups_page()
         wd.find_element(by=By.NAME, value="new").click()
         # заполнение атрибутов группы
         wd.find_element(by=By.NAME, value="group_name").click()
@@ -51,15 +52,17 @@ class TestAddGroup(unittest.TestCase):
         wd.find_element(by=By.NAME, value="group_footer").send_keys(group.footer)
         # завершение создания группы
         wd.find_element(by=By.NAME, value="submit").click()
-        self.return_to_groups_page(wd)
+        self.return_to_groups_page()
 
-    def open_groups_page(self, wd):
+    def open_groups_page(self):
+        wd = self.wd
         # переход на страницу "Группы"
         wd.find_element(by=By.LINK_TEXT, value="groups").click()
 
-    def login(self, wd, username, password):
+    def login(self, username, password):
+        wd = self.wd
         # авторизация в учетной записи
-        self.open_home_page(wd)
+        self.open_home_page()
         wd.find_element(by=By.NAME, value="user").click()
         wd.find_element(by=By.NAME, value="user").clear()
         wd.find_element(by=By.NAME, value="user").send_keys(username)
@@ -68,23 +71,10 @@ class TestAddGroup(unittest.TestCase):
         wd.find_element(by=By.NAME, value="pass").send_keys(password)
         wd.find_element(by=By.XPATH, value="//input[@value='Login']").click()
 
-    def open_home_page(self, wd):
+    def open_home_page(self):
+        wd = self.wd
         # открытие домашней страницы
         wd.get("http://localhost/addressbook/")
-
-    #    def is_element_present(self, how, what):
-#        try:
-#            self.wd.find_element(by=how, value=what)
-#        except NoSuchElementException as e:
-#            return False
-#        return True
-
-#   def is_alert_present(self):
-#       try:
-#          self.wd.switch_to_alert()
-#        except NoAlertPresentException as e:
-#            return False
-#       return True
 
     def tearDown(self):
         self.wd.quit()
