@@ -17,20 +17,14 @@ class TestAddGroup(unittest.TestCase):
 
     def test_add_group(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.open_groups_page(wd)
-        self.create_group(wd, Group(name="third", header = "header", footer = "footer"))
-        self.return_to_groups_page(wd)
+        self.create_group(wd, Group(name="third", header="header", footer="footer"))
         self.logout(wd)
 
     def test_add_empty_group(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.open_groups_page(wd)
-        self.create_group(wd, Group(name = "", header = "", footer = ""))
-        self.return_to_groups_page(wd)
+        self.create_group(wd, Group(name="", header="", footer=""))
         self.logout(wd)
 
     def logout(self, wd):
@@ -43,6 +37,7 @@ class TestAddGroup(unittest.TestCase):
 
     def create_group(self, wd, group):
         # начало создания новой группы
+        self.open_groups_page(wd)
         wd.find_element(by=By.NAME, value="new").click()
         # заполнение атрибутов группы
         wd.find_element(by=By.NAME, value="group_name").click()
@@ -56,6 +51,7 @@ class TestAddGroup(unittest.TestCase):
         wd.find_element(by=By.NAME, value="group_footer").send_keys(group.footer)
         # завершение создания группы
         wd.find_element(by=By.NAME, value="submit").click()
+        self.return_to_groups_page(wd)
 
     def open_groups_page(self, wd):
         # переход на страницу "Группы"
@@ -63,6 +59,7 @@ class TestAddGroup(unittest.TestCase):
 
     def login(self, wd, username, password):
         # авторизация в учетной записи
+        self.open_home_page(wd)
         wd.find_element(by=By.NAME, value="user").click()
         wd.find_element(by=By.NAME, value="user").clear()
         wd.find_element(by=By.NAME, value="user").send_keys(username)

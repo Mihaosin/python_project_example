@@ -12,20 +12,16 @@ class TestAddContact(unittest.TestCase):
 
     def test_add_contact(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.create_contact(wd, Contact(firstname="Vasia", lastname="Petrov", address="Texas", email="perov@adress.book"))
         # тест добавления пустого контакта
-        #self.create_contact(wd, Contact(firstname="", lastname="", address="", email=""))
-        self.return_to_first_page(wd)
+        # self.create_contact(wd, Contact(firstname="", lastname="", address="", email=""))
         self.logout(wd)
 
     def test_add_empty_contact(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.create_contact(wd, Contact(firstname="", lastname="", address="", email=""))
-        self.return_to_first_page(wd)
         self.logout(wd)
 
     def logout(self, wd):
@@ -54,8 +50,10 @@ class TestAddContact(unittest.TestCase):
         wd.find_element(by=By.NAME, value="email").send_keys(contact.email)
         # завершение создания котакта
         wd.find_element(by=By.NAME, value="submit").click()
+        self.return_to_first_page(wd)
 
     def login(self, wd, username, password):
+        self.open_home_page(wd)
         # авторизация в учетной записи
         wd.find_element(by=By.NAME, value="user").click()
         wd.find_element(by=By.NAME, value="user").clear()
@@ -63,7 +61,7 @@ class TestAddContact(unittest.TestCase):
         wd.find_element(by=By.NAME, value="pass").click()
         wd.find_element(by=By.NAME, value="pass").clear()
         wd.find_element(by=By.NAME, value="pass").send_keys(password)
-        wd.find_element(by=By.XPATH, value="//input[@value='Login']").click()
+        wd.find_element(by=By.CSS_SELECTOR, value="input[value='Login']").click()
 
     def open_home_page(self, wd):
         # открытие домашней страницы
