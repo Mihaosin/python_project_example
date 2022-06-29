@@ -33,3 +33,10 @@ class ContactHelper:
         # завершение создания котакта
         wd.find_element(by=By.NAME, value="submit").click()
         self.return_to_first_page()
+
+    def delete_first(self):
+        wd = self.app.wd
+        # выбрать первый контакт (чек-бокс)
+        wd.find_element(by=By.NAME, value="selected[]").click()
+        # нажать на кнопуку "удалить"
+        wd.find_element(by=By.CSS_SELECTOR, value="input[value='Delete']").click()

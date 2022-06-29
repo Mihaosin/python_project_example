@@ -32,6 +32,15 @@ class GroupHelper:
         wd.find_element(by=By.NAME, value="submit").click()
         self.return_to_groups_page()
 
+    def delete_first(self):
+        wd = self.app.wd
+        self.open_groups_page()
+        # выбрать первую группу (чек-бокс)
+        wd.find_element(by=By.NAME, value="selected[]").click()
+        # нажать на кнопуку "удалить группу"
+        wd.find_element(by=By.NAME, value="delete").click()
+        self.return_to_groups_page()
+
     def open_groups_page(self):
         wd = self.app.wd
         # переход на страницу "Группы"
