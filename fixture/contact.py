@@ -40,3 +40,7 @@ class ContactHelper:
         wd.find_element(by=By.NAME, value="selected[]").click()
         # нажать на кнопуку "удалить"
         wd.find_element(by=By.CSS_SELECTOR, value="input[value='Delete']").click()
+        # переключение на всплывающее окно запроса подтверждения удаления при помощи метода вебдрайвера switch_to.alert
+        alert = wd.switch_to.alert
+        # подтверждение действия внутри всплывающего окна
+        alert.accept()
