@@ -8,11 +8,6 @@ class ContactHelper:
         # и сохраняет ее в свойство с именем app
         self.app = app
 
-    def return_to_first_page(self):
-        wd = self.app.wd
-        # возврат на первую страницу
-        wd.find_element(by=By.LINK_TEXT, value="home").click()
-
     def create(self, contact):
         wd = self.app.wd
         # начало создания нового контакта
@@ -34,6 +29,27 @@ class ContactHelper:
         wd.find_element(by=By.NAME, value="submit").click()
         self.return_to_first_page()
 
+    def edit_first(self, contact):
+        wd = self.app.wd
+        # нажимаем кнопку edit для первой строки списка контактов
+        wd.find_element(by=By.CSS_SELECTOR, value="img[alt='Edit']").click()
+        # заполнение свойств котакта
+        wd.find_element(by=By.NAME, value="firstname").click()
+        wd.find_element(by=By.NAME, value="firstname").clear()
+        wd.find_element(by=By.NAME, value="firstname").send_keys(contact.firstname)
+        wd.find_element(by=By.NAME, value="lastname").click()
+        wd.find_element(by=By.NAME, value="lastname").clear()
+        wd.find_element(by=By.NAME, value="lastname").send_keys(contact.lastname)
+        wd.find_element(by=By.NAME, value="address").click()
+        wd.find_element(by=By.NAME, value="address").clear()
+        wd.find_element(by=By.NAME, value="address").send_keys(contact.address)
+        wd.find_element(by=By.NAME, value="email").click()
+        wd.find_element(by=By.NAME, value="email").clear()
+        wd.find_element(by=By.NAME, value="email").send_keys(contact.email)
+        # завершение редактирования котакта
+        wd.find_element(by=By.NAME, value="update").click()
+        self.return_to_first_page()
+
     def delete_first(self):
         wd = self.app.wd
         # выбрать первый контакт (чек-бокс)
@@ -44,3 +60,8 @@ class ContactHelper:
         alert = wd.switch_to.alert
         # подтверждение действия внутри всплывающего окна
         alert.accept()
+
+    def return_to_first_page(self):
+        wd = self.app.wd
+        # возврат на первую страницу
+        wd.find_element(by=By.LINK_TEXT, value="home").click()
