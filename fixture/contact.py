@@ -12,48 +12,42 @@ class ContactHelper:
         wd = self.app.wd
         # начало создания нового контакта
         wd.find_element(by=By.LINK_TEXT, value="add new").click()
-        # заполнение свойств котакта
-        wd.find_element(by=By.NAME, value="firstname").click()
-        wd.find_element(by=By.NAME, value="firstname").clear()
-        wd.find_element(by=By.NAME, value="firstname").send_keys(contact.firstname)
-        wd.find_element(by=By.NAME, value="lastname").click()
-        wd.find_element(by=By.NAME, value="lastname").clear()
-        wd.find_element(by=By.NAME, value="lastname").send_keys(contact.lastname)
-        wd.find_element(by=By.NAME, value="address").click()
-        wd.find_element(by=By.NAME, value="address").clear()
-        wd.find_element(by=By.NAME, value="address").send_keys(contact.address)
-        wd.find_element(by=By.NAME, value="email").click()
-        wd.find_element(by=By.NAME, value="email").clear()
-        wd.find_element(by=By.NAME, value="email").send_keys(contact.email)
+        self.fill_contact_form(contact)
         # завершение создания котакта
         wd.find_element(by=By.NAME, value="submit").click()
         self.return_to_first_page()
 
+    def fill_contact_form(self, contact):
+        wd = self.app.wd
+        # заполнение свойств котакта
+        self.change_field_value("firstname", contact.firstname)
+        self.change_field_value("lastname", contact.lastname)
+        self.change_field_value("address", contact.address)
+        self.change_field_value("email", contact.email)
+
+    def change_field_value(self, field_name, text):
+        if text is not None:
+            wd = self.app.wd
+            wd.find_element(by=By.NAME, value=field_name).click()
+            wd.find_element(by=By.NAME, value=field_name).clear()
+            wd.find_element(by=By.NAME, value=field_name).send_keys(text)
+
     def edit_first(self, contact):
         wd = self.app.wd
-        # нажимаем кнопку edit для первой строки списка контактов
-        wd.find_element(by=By.CSS_SELECTOR, value="img[alt='Edit']").click()
-        # заполнение свойств котакта
-        wd.find_element(by=By.NAME, value="firstname").click()
-        wd.find_element(by=By.NAME, value="firstname").clear()
-        wd.find_element(by=By.NAME, value="firstname").send_keys(contact.firstname)
-        wd.find_element(by=By.NAME, value="lastname").click()
-        wd.find_element(by=By.NAME, value="lastname").clear()
-        wd.find_element(by=By.NAME, value="lastname").send_keys(contact.lastname)
-        wd.find_element(by=By.NAME, value="address").click()
-        wd.find_element(by=By.NAME, value="address").clear()
-        wd.find_element(by=By.NAME, value="address").send_keys(contact.address)
-        wd.find_element(by=By.NAME, value="email").click()
-        wd.find_element(by=By.NAME, value="email").clear()
-        wd.find_element(by=By.NAME, value="email").send_keys(contact.email)
+        self.select_first_contact()
+        self.fill_contact_form(contact)
         # завершение редактирования котакта
         wd.find_element(by=By.NAME, value="update").click()
         self.return_to_first_page()
 
+    def select_first_contact(self):
+        wd = self.app.wd
+        # нажимаем кнопку edit для первой строки списка контактов
+        wd.find_element(by=By.CSS_SELECTOR, value="img[alt='Edit']").click()
+
     def delete_first(self):
         wd = self.app.wd
-        # выбрать первый контакт (чек-бокс)
-        wd.find_element(by=By.NAME, value="selected[]").click()
+        self.select_first_contact()
         # нажать на кнопуку "удалить"
         wd.find_element(by=By.CSS_SELECTOR, value="input[value='Delete']").click()
         # переключение на всплывающее окно запроса подтверждения удаления при помощи метода вебдрайвера switch_to.alert
