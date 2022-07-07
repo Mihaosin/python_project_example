@@ -22,4 +22,3 @@ def stop(request):
         fixture.session.logout()
         fixture.destroy()
     request.addfinalizer(fin)
-
