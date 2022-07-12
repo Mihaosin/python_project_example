@@ -7,7 +7,7 @@ from model.contact import Contact
 
 def test_add_contact(app):
     app.contact.create(Contact(firstname="Vasia", lastname="Petrov", address="Texas", email="perov@adress.book"))
-    app.session.logout()
+    # app.session.logout()
 
 
 def test_add_empty_contact(app):
