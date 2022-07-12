@@ -16,7 +16,7 @@ class GroupHelper:
         self.fill_group_form(group)
         # завершение создания группы
         wd.find_element(by=By.NAME, value="submit").click()
-        self.return_to_groups_page()
+        # self.return_to_groups_page()
 
     def fill_group_form(self, group):
         # заполнение атрибутов группы
@@ -40,7 +40,7 @@ class GroupHelper:
         self.fill_group_form(group)
         # нажать на кнопку подтвердить изменения
         wd.find_element(by=By.NAME, value="update").click()
-        self.return_to_groups_page()
+        # self.return_to_groups_page()
 
     def delete_first(self):
         wd = self.app.wd
@@ -48,7 +48,7 @@ class GroupHelper:
         self.select_first_group()
         # нажать на кнопуку "удалить группу"
         wd.find_element(by=By.NAME, value="delete").click()
-        self.return_to_groups_page()
+        # self.return_to_groups_page()
 
     # выбрать первую группу (чек-бокс)
     def select_first_group(self):
@@ -57,13 +57,14 @@ class GroupHelper:
 
     def open_groups_page(self):
         wd = self.app.wd
-        # переход на страницу "Группы"
-        wd.find_element(by=By.LINK_TEXT, value="groups").click()
+        if not (wd.current_url.endswith("/group.php") and len(wd.find_elements(by=By.NAME, value="new")) > 0):
+            # переход на страницу "Группы"
+            wd.find_element(by=By.LINK_TEXT, value="groups").click()
 
-    def return_to_groups_page(self):
-        wd = self.app.wd
+    # def return_to_groups_page(self):
+        # wd = self.app.wd
         # возврат на страницу "Группы"
-        wd.find_element(by=By.LINK_TEXT, value="groups").click()
+        # wd.find_element(by=By.LINK_TEXT, value="groups").click()
 
     def count(self):
         wd = self.app.wd

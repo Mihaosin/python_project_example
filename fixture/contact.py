@@ -16,7 +16,7 @@ class ContactHelper:
         self.fill_contact_form(contact)
         # завершение создания котакта
         wd.find_element(by=By.NAME, value="submit").click()
-        self.return_to_first_page()
+        # self.return_to_first_page()
 
     def fill_contact_form(self, contact):
         wd = self.app.wd
@@ -40,7 +40,7 @@ class ContactHelper:
         self.fill_contact_form(contact)
         # завершение редактирования котакта
         wd.find_element(by=By.NAME, value="update").click()
-        self.return_to_first_page()
+        # self.return_to_first_page()
 
     def select_first_contact(self):
         wd = self.app.wd
@@ -58,10 +58,10 @@ class ContactHelper:
         # подтверждение действия внутри всплывающего окна
 #        alert.accept()
 
-    def return_to_first_page(self):
-        wd = self.app.wd
+    # def return_to_first_page(self):
+        # wd = self.app.wd
         # возврат на первую страницу
-        wd.find_element(by=By.LINK_TEXT, value="home").click()
+        # wd.find_element(by=By.LINK_TEXT, value="home").click()
 
     def count(self):
         wd = self.app.wd
