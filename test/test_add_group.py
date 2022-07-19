@@ -10,24 +10,23 @@ from model.group import Group
 
 def test_add_group(app):
     old_groups = app.group.get_group_list()
-    app.group.create(Group(name="third", header="header", footer="footer"))
+    group = Group(name="third", header="header", footer="footer")
+    app.group.create(group)
     new_groups = app.group.get_group_list()
     assert len(old_groups) + 1 == len(new_groups)
     # готовим old_groups и new_groups к сравнению по элементам
-    new_groups = sorted(new_groups, key= lambda group: int(group.id))
-    new_groups[len(new_groups)-1:len(new_groups)] = []
-    old_groups = sorted(old_groups, key=lambda group: int(group.id))
-    assert old_groups == new_groups
-
+    # new_groups = sorted(new_groups, key= lambda group: int(group.id))
+    # new_groups[len(new_groups)-1:len(new_groups)] = []
+    # old_groups = sorted(old_groups, key=lambda group: int(group.id))
+    old_groups.append(group)
+    assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
 
 def test_add_empty_group(app):
     old_groups = app.group.get_group_list()
-    app.group.create(Group(name="", header="", footer=""))
+    group = Group(name="", header="", footer="")
+    app.group.create(group)
     new_groups = app.group.get_group_list()
     assert len(old_groups) + 1 == len(new_groups)
-    # готовим old_groups и new_groups к сравнению по элементам
-    new_groups = sorted(new_groups, key=lambda group: int(group.id))
-    new_groups[len(new_groups) - 1:len(new_groups)] = []
-    old_groups = sorted(old_groups, key=lambda group: int(group.id))
-    assert old_groups == new_groups
+    old_groups.append(group)
+    assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
