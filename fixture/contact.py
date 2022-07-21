@@ -36,9 +36,12 @@ class ContactHelper:
             wd.find_element(by=By.NAME, value=field_name).send_keys(text)
 
     def edit_first(self, contact):
+        self.edit_by_index(0, contact)
+
+    def edit_by_index(self, index, contact):
         wd = self.app.wd
         self.app.open_home_page()
-        self.select_first_contact()
+        self.select_contact_by_index(index)
         self.fill_contact_form(contact)
         # завершение редактирования котакта
         wd.find_element(by=By.NAME, value="update").click()
@@ -46,14 +49,20 @@ class ContactHelper:
         self.contact_cache = None
 
     def select_first_contact(self):
+        self.select_contact_by_index(0)
+
+    def select_contact_by_index(self, index):
         wd = self.app.wd
-        # нажимаем кнопку edit для первой строки списка контактов
-        wd.find_element(by=By.CSS_SELECTOR, value="img[alt='Edit']").click()
+        # нажимаем кнопку edit для заданной по индексу строки из списка контактов
+        wd.find_elements(by=By.CSS_SELECTOR, value="img[alt='Edit']")[index].click()
 
     def delete_first(self):
+        self.delete_by_index(0)
+
+    def delete_by_index(self, index):
         wd = self.app.wd
         self.app.open_home_page()
-        self.select_first_contact()
+        self.select_contact_by_index(index)
         # нажать на кнопуку "удалить"
         wd.find_element(by=By.CSS_SELECTOR, value="input[value='Delete']").click()
         self.contact_cache = None
