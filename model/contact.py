@@ -20,3 +20,5 @@ class Contact:
             return  int(self.id)
         else:
             return maxsize
+
+# 8 passed, 16 warnings in 30.57s

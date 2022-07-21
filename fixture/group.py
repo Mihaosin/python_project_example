@@ -18,6 +18,7 @@ class GroupHelper:
         # завершение создания группы
         wd.find_element(by=By.NAME, value="submit").click()
         # self.return_to_groups_page()
+        self.group_cache = None
 
     def fill_group_form(self, group):
         # заполнение атрибутов группы
@@ -42,6 +43,7 @@ class GroupHelper:
         # нажать на кнопку подтвердить изменения
         wd.find_element(by=By.NAME, value="update").click()
         # self.return_to_groups_page()
+        self.group_cache = None
 
     def delete_first(self):
         wd = self.app.wd
@@ -50,6 +52,7 @@ class GroupHelper:
         # нажать на кнопуку "удалить группу"
         wd.find_element(by=By.NAME, value="delete").click()
         # self.return_to_groups_page()
+        self.group_cache = None
 
     # выбрать первую группу (чек-бокс)
     def select_first_group(self):
@@ -72,13 +75,16 @@ class GroupHelper:
         self.open_groups_page()
         return len(wd.find_elements(by=By.NAME, value="selected[]"))
 
+    group_cache = None
+
     def get_group_list(self):
-        wd = self.app.wd
-        self.open_groups_page()
-        groups = []
-        # for element in wd.find_elements_by_css_selector("span.group"):
-        for element in wd.find_elements(by=By.CSS_SELECTOR, value="span.group"):
-            text = element.text
-            id = element.find_element(by=By.NAME, value="selected[]").get_attribute("value")
-            groups.append(Group(name=text, id=id))
-        return groups
+        if self.group_cache is None:
+            wd = self.app.wd
+            self.open_groups_page()
+            self.group_cache = []
+            # for element in wd.find_elements_by_css_selector("span.group"):
+            for element in wd.find_elements(by=By.CSS_SELECTOR, value="span.group"):
+                text = element.text
+                id = element.find_element(by=By.NAME, value="selected[]").get_attribute("value")
+                self.group_cache.append(Group(name=text, id=id))
+        return list(self.group_cache)

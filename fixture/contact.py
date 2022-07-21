@@ -18,6 +18,7 @@ class ContactHelper:
         # завершение создания котакта
         wd.find_element(by=By.NAME, value="submit").click()
         # self.return_to_first_page()
+        self.contact_cache = None
 
     def fill_contact_form(self, contact):
         wd = self.app.wd
@@ -42,6 +43,7 @@ class ContactHelper:
         # завершение редактирования котакта
         wd.find_element(by=By.NAME, value="update").click()
         # self.return_to_first_page()
+        self.contact_cache = None
 
     def select_first_contact(self):
         wd = self.app.wd
@@ -54,6 +56,7 @@ class ContactHelper:
         self.select_first_contact()
         # нажать на кнопуку "удалить"
         wd.find_element(by=By.CSS_SELECTOR, value="input[value='Delete']").click()
+        self.contact_cache = None
         # переключение на всплывающее окно запроса подтверждения удаления при помощи метода вебдрайвера switch_to.alert
 #        alert = wd.switch_to.alert
         # подтверждение действия внутри всплывающего окна
@@ -69,16 +72,19 @@ class ContactHelper:
         self.app.open_home_page()
         return len(wd.find_elements(by=By.NAME, value="selected[]"))
 
+    contact_cache = None
+
     def get_contact_list(self):
-        wd = self.app.wd
-        self.app.open_home_page()
-        contacts = []
-        # records = wd.find_elements(by=By.CSS_SELECTOR, value="tr")
-        for element in wd.find_elements(by=By.CSS_SELECTOR, value="tr"):
-            fields = element.find_elements(by=By.CSS_SELECTOR, value="td")
-            if len(fields) > 1:
-                id = fields[0].find_element(by=By.NAME, value="selected[]").get_attribute("value")
-                # last_name = fields[1].text
-                # first_name = fields[2].text
-                contacts.append(Contact(firstname=fields[2].text, lastname=fields[1].text, id=id))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.app.open_home_page()
+            self.contact_cache = []
+            # records = wd.find_elements(by=By.CSS_SELECTOR, value="tr")
+            for element in wd.find_elements(by=By.CSS_SELECTOR, value="tr"):
+                fields = element.find_elements(by=By.CSS_SELECTOR, value="td")
+                if len(fields) > 1:
+                    id = fields[0].find_element(by=By.NAME, value="selected[]").get_attribute("value")
+                    # last_name = fields[1].text
+                    # first_name = fields[2].text
+                    self.contact_cache.append(Contact(firstname=fields[2].text, lastname=fields[1].text, id=id))
+        return list(self.contact_cache)
