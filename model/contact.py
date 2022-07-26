@@ -2,12 +2,17 @@ from sys import maxsize
 
 
 class Contact:
-    def __init__(self, firstname=None, lastname=None, address=None, email=None, id=None):
+    def __init__(self, firstname=None, lastname=None, address=None, email=None, id=None,
+                        homephone=None, mobilephone=None, workphone=None, fax=None):
         self.firstname = firstname
         self.lastname = lastname
         self.address = address
         self.email = email
         self.id = id
+        self.homephone = homephone
+        self.mobilephone = mobilephone
+        self.workphone = workphone
+        self.fax = fax
 
     def __eq__(self, other):
         EQ1 = self.id is None or other.id is None or self.id == other.id

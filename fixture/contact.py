@@ -83,17 +83,30 @@ class ContactHelper:
 
     contact_cache = None
 
+    # def get_contact_list(self):
+    #     if self.contact_cache is None:
+    #         wd = self.app.wd
+    #         self.app.open_home_page()
+    #         self.contact_cache = []
+    #         # records = wd.find_elements(by=By.CSS_SELECTOR, value="tr")
+    #         for element in wd.find_elements(by=By.CSS_SELECTOR, value="tr"):
+    #             fields = element.find_elements(by=By.CSS_SELECTOR, value="td")
+    #             if len(fields) > 1:
+    #                 id = fields[0].find_element(by=By.NAME, value="selected[]").get_attribute("value")
+    #                 # last_name = fields[1].text
+    #                 # first_name = fields[2].text
+    #                 self.contact_cache.append(Contact(firstname=fields[2].text, lastname=fields[1].text, id=id))
+    #     return list(self.contact_cache)
+
     def get_contact_list(self):
         if self.contact_cache is None:
             wd = self.app.wd
             self.app.open_home_page()
             self.contact_cache = []
-            # records = wd.find_elements(by=By.CSS_SELECTOR, value="tr")
-            for element in wd.find_elements(by=By.CSS_SELECTOR, value="tr"):
-                fields = element.find_elements(by=By.CSS_SELECTOR, value="td")
-                if len(fields) > 1:
-                    id = fields[0].find_element(by=By.NAME, value="selected[]").get_attribute("value")
-                    # last_name = fields[1].text
-                    # first_name = fields[2].text
-                    self.contact_cache.append(Contact(firstname=fields[2].text, lastname=fields[1].text, id=id))
+            for row in wd.find_elements(by=By.NAME, value="entry"):
+                cells = row.find_elements(by=By.TAG_NAME, value="td")
+                id = cells[0].find_element(by=By.NAME, value="selected[]").get_attribute("value")
+                lastname = cells[1].text
+                firstname = cells[2].text
+                self.contact_cache.append(Contact(firstname=firstname, lastname=lastname, id=id))
         return list(self.contact_cache)
