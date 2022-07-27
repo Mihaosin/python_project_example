@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from model.contact import Contact
+import re
 
 
 class ContactHelper:
@@ -140,6 +141,17 @@ class ContactHelper:
         return Contact(firstname=firstname, lastname=lastname, id=id,
                        homephone=homephone, mobilephone=mobilephone, workphone=workphone)
 
+    def get_contact_from_view_page(self, index):
+        wd = self.app.wd
+        self.open_contact_view_by_index(index)
+        text = wd.find_element(by=By.ID, value="content").text
+        homephone = re.search("H: (.*)", text).group(1)
+        mobilephone = re.search("M: (.*)", text).group(1)
+        workphone = re.search("W: (.*)", text).group(1)
+        return Contact(homephone=homephone, mobilephone=mobilephone, workphone=workphone)
+
+
+
 # структура таблица контактов в HTML-коде главной страницы
 index_id = 0
 index_lastname = 1
@@ -150,3 +162,5 @@ index_phones = 5
 index_view_button = 6
 index_edit_button = 7
 index_save_contact_button = 8
+
+
