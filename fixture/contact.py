@@ -110,9 +110,19 @@ class ContactHelper:
                 lastname = cells[index_lastname].text
                 firstname = cells[index_firstname].text
                 all_phones = cells[index_phones].text.splitlines()
+                homephone = ''
+                mobilephone = ''
+                workphone = ''
+                len_all_phones = len(all_phones)
+                if len_all_phones > 0:
+                    homephone=all_phones[0]
+                if len_all_phones > 1:
+                    mobilephone = all_phones[1]
+                if len_all_phones > 2:
+                    workphone = all_phones[2]
                 self.contact_cache.append(Contact(firstname=firstname, lastname=lastname, id=id,
-                                                  homephone=all_phones[0], mobilephone=all_phones[1],
-                                                  workphone=all_phones[2]))
+                                                  homephone=homephone, mobilephone=mobilephone,
+                                                  workphone=workphone))
         return list(self.contact_cache)
 
     def open_contact_to_edit_by_index(self, index):
