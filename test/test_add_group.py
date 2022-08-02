@@ -6,11 +6,25 @@
 # from selenium.common.exceptions import NoSuchElementException
 # from selenium.common.exceptions import NoAlertPresentException
 from model.group import Group
+import  pytest
+import random
+import string
 
 
-def test_add_group(app):
+def random_string(prefix, maxlen):
+    symbols = string.ascii_letters + " " + string.punctuation
+    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
+
+
+testdata = [Group(name="", header="", footer="")] + [
+            Group(name=random_string("name"+str(i), 10), header=random_string("header", 10), footer=random_string("footer", 10))
+            for i in range(5)
+]
+
+# тест будет падать, если в имени группы будут присутствовать "'", "\" или более чем один пробел подряд или пробел в конце имени
+@pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
+def test_add_group(app, group):
     old_groups = app.group.get_group_list()
-    group = Group(name="third", header="header", footer="footer")
     app.group.create(group)
     assert len(old_groups) + 1 == app.group.count()
     new_groups = app.group.get_group_list()

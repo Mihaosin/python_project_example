@@ -50,6 +50,7 @@ def merge_emails_like_on_home_page(contact):
     s4 = "\n".join(s3)
     return s4
 
+
 # def merge_emails_like_on_home_page(contact):
 #     return "\n".join(filter(lambda x: x !='',
 #                             map(lambda x: clear(x),
