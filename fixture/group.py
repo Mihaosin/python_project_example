@@ -94,3 +94,11 @@ class GroupHelper:
                 id = element.find_element(by=By.NAME, value="selected[]").get_attribute("value")
                 self.group_cache.append(Group(name=text, id=id))
         return list(self.group_cache)
+
+    def erase_groups(self):
+        wd = self.app.wd
+        self.open_groups_page()
+        check_boxes = wd.find_elements(by=By.NAME, value="selected[]")
+        for i in range(0, len(check_boxes)):
+            check_boxes[i].click()
+        wd.find_element(by=By.NAME, value="delete").click()

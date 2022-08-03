@@ -157,6 +157,16 @@ class ContactHelper:
         workphone = re.search("W: (.*)", text).group(1)
         return Contact(homephone=homephone, mobilephone=mobilephone, workphone=workphone)
 
+    def erase_contats(self):
+        wd = self.app.wd
+        self.app.open_home_page()
+        if len(self.get_contact_list()) > 0:
+            wd.find_element(by=By.ID, value="MassCB").click()
+            wd.find_element(by=By.CSS_SELECTOR, value="input[value='Delete']").click()
+            # переключение на всплывающее окно запроса подтверждения удаления при помощи метода вебдрайвера switch_to.alert
+            alert = wd.switch_to.alert
+            # подтверждение действия внутри всплывающего окна
+            alert.accept()
 
 
 # структура таблица контактов в HTML-коде главной страницы
