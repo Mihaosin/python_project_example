@@ -1,5 +1,5 @@
 from model.contact import Contact
-from data.add_group import random_string
+from generator.group import random_string
 import os.path
 import json
 import getopt
