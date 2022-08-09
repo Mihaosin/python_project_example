@@ -3,15 +3,9 @@
 # from selenium.webdriver.common.by import By
 # import unittest
 from model.contact import Contact
-import  pytest
-import random
-import string
-from test.test_add_group import random_string
+import pytest
+from data.add_contact import constant as testdata
 
-testdata = [Contact(firstname="", lastname="")] + [
-            Contact(firstname=random_string("firstname"+str(i), 10), lastname=random_string("lastname", 20))
-            for i in range(5)
-]
 
 # тест будет падать, если в именах контакта будут присутствовать "'", "\" или более чем один пробел подряд или пробел в конце имени
 @pytest.mark.parametrize("contact", testdata, ids=[repr(x) for x in testdata])
