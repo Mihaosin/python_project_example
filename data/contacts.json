@@ -1,5 +1,6 @@
 [
   {
+    "py/object": "model.contact.Contact",
     "id": null,
     "lastname": "",
     "firstname": "",
@@ -15,9 +16,10 @@
     "all_phones_from_home_page": null
   },
   {
+    "py/object": "model.contact.Contact",
     "id": null,
-    "lastname": "lastnametTQisrsYBr",
-    "firstname": "firstname0hfhN",
+    "lastname": "lastnameOnQTgOMPJsNRxnZWtu",
+    "firstname": "firstname0l RuQ",
     "address": null,
     "mail1": null,
     "mail2": null,
@@ -30,9 +32,10 @@
     "all_phones_from_home_page": null
   },
   {
+    "py/object": "model.contact.Contact",
     "id": null,
-    "lastname": "lastnamewqtiS ykHo",
-    "firstname": "firstname1 C xEVa",
+    "lastname": "lastnameyxGdKjPlriCX",
+    "firstname": "firstname1N",
     "address": null,
     "mail1": null,
     "mail2": null,
@@ -45,9 +48,10 @@
     "all_phones_from_home_page": null
   },
   {
+    "py/object": "model.contact.Contact",
     "id": null,
-    "lastname": "lastnameFFugBQzBxuo",
-    "firstname": "firstname2UDHMsFb",
+    "lastname": "lastnametHyvsuqHpCZVRpJtfW",
+    "firstname": "firstname2",
     "address": null,
     "mail1": null,
     "mail2": null,
@@ -60,9 +64,10 @@
     "all_phones_from_home_page": null
   },
   {
+    "py/object": "model.contact.Contact",
     "id": null,
-    "lastname": "lastnameJWmxjhaZhzzQ C pB",
-    "firstname": "firstname3JMYBmFA",
+    "lastname": "lastname W",
+    "firstname": "firstname3bY",
     "address": null,
     "mail1": null,
     "mail2": null,
@@ -75,9 +80,10 @@
     "all_phones_from_home_page": null
   },
   {
+    "py/object": "model.contact.Contact",
     "id": null,
-    "lastname": "lastnamemoWtBOWvVvbrn",
-    "firstname": "firstname4WH e",
+    "lastname": "lastnamejPkEHnguWTVxyBHX",
+    "firstname": "firstname4rVQ LwXl",
     "address": null,
     "mail1": null,
     "mail2": null,
