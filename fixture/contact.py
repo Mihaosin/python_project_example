@@ -72,6 +72,23 @@ class ContactHelper:
         # подтверждение действия внутри всплывающего окна
 #        alert.accept()
 
+    def delete_by_id(self, id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_contact_by_id(id)
+        # нажать на кнопуку "удалить"
+        wd.find_element(by=By.CSS_SELECTOR, value="input[value='Delete']").click()
+        alert = wd.switch_to.alert
+        alert.accept()
+        self.contact_cache = None
+
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        # нажимаем кнопку edit для заданной по индексу строки из списка контактов
+        wd.find_element(by=By.CSS_SELECTOR, value="input[id='%s']" % id).click()
+        # wd.find_elements(by=By.CSS_SELECTOR, value="img[alt='Edit']")[index].click()
+        # wd.find_element(by=By.ID, value="str(id)").click()
+
     # def return_to_first_page(self):
         # wd = self.app.wd
         # возврат на первую страницу

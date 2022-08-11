@@ -60,10 +60,25 @@ class GroupHelper:
         # self.return_to_groups_page()
         self.group_cache = None
 
+    def delete_by_id(self, id):
+        wd = self.app.wd
+        self.open_groups_page()
+        self.select_group_by_id(id)
+        # нажать на кнопуку "удалить группу"
+        wd.find_element(by=By.NAME, value="delete").click()
+        # self.return_to_groups_page()
+        self.group_cache = None
+
     # выбрать группу по заданному индексу (чек-бокс)
     def select_group_by_index(self, index):
         wd = self.app.wd
         wd.find_elements(by=By.NAME, value="selected[]")[index].click()
+
+    # выбрать группу по заданному id
+    def select_group_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element(by=By.CSS_SELECTOR, value="input[value='%s']" % id).click()
+        # wd.find_element_by_css_selector("input[value='%s']" % id).click()
 
     def open_groups_page(self):
         wd = self.app.wd
