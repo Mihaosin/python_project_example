@@ -12,7 +12,7 @@ import random
 #     assert len(old_contacts) == len(new_contacts)
 #
 
-def test_edit_random_contact_firstname(app, db):
+def test_edit_random_contact_firstname(app, db, check_ui):
     if app.contact.count() == 0:
        app.contact.create(Contact(firstname="Pasha"))
     old_contacts = db.get_contact_list()
@@ -24,6 +24,8 @@ def test_edit_random_contact_firstname(app, db):
         if old_contacts[i].id == contact.id:
             old_contacts[i].firstname = "New_Vasia"
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
+    if check_ui:
+        assert sorted(new_contacts, key=Contact.id_or_max) == sorted(app.contact.get_contact_list(), key=Contact.id_or_max)
 
 
 # def test_edit_random_contact_firstname(app, db):

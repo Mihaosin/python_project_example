@@ -2,7 +2,7 @@ from model.group import Group
 import random
 
 
-def test_edit_group_name_by_id(app, db):
+def test_edit_group_name_by_id(app, db, check_ui):
     if app.group.count() == 0:
         app.group.create(Group(name="Sasha", footer="Masha"))
     old_groups = db.get_group_list()
@@ -14,6 +14,8 @@ def test_edit_group_name_by_id(app, db):
         if old_groups[i].id == group.id:
             old_groups[i].name = "new_name"
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
+    if check_ui:
+        assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
 
 
 # def test_edit_first_group_header(app):
