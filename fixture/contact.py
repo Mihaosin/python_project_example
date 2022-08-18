@@ -49,6 +49,17 @@ class ContactHelper:
         # self.return_to_first_page()
         self.contact_cache = None
 
+
+    def edit_by_id(self, contact):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.press_edit_button_contact_by_id(contact.id)
+        self.fill_contact_form(contact)
+        # завершение редактирования котакта
+        wd.find_element(by=By.NAME, value="update").click()
+        # self.return_to_first_page()
+        self.contact_cache = None
+
     def select_first_contact(self):
         self.select_contact_by_index(0)
 
@@ -82,12 +93,11 @@ class ContactHelper:
         alert.accept()
         self.contact_cache = None
 
-    def select_contact_by_id(self, id):
+    def press_edit_button_contact_by_id(self, id):
         wd = self.app.wd
-        # нажимаем кнопку edit для заданной по индексу строки из списка контактов
-        wd.find_element(by=By.CSS_SELECTOR, value="input[id='%s']" % id).click()
-        # wd.find_elements(by=By.CSS_SELECTOR, value="img[alt='Edit']")[index].click()
-        # wd.find_element(by=By.ID, value="str(id)").click()
+        # нажимаем кнопку edit для заданной по id строки из списка контактов
+        v = 'a[href="edit.php?id='+str(id)+'"]'
+        wd.find_element(by=By.CSS_SELECTOR, value=v).click()
 
     # def return_to_first_page(self):
         # wd = self.app.wd

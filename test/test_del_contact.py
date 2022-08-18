@@ -10,7 +10,7 @@ def test_delete_random_contact(app, db):
     contact = random.choice(old_contacts)
     app.contact.delete_by_id(contact.id)
     # задержка в выполнении программы перед считыванием списка контактов из БД после удаления одного
-    time.sleep(2)
+    time.sleep(1)
     # возможно считывание контактов из БД происходит быстрее, чем обновление БД по операции удаления
     new_contacts = db.get_contact_list()
     old_contacts.remove(contact)
