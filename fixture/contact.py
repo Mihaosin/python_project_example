@@ -93,6 +93,11 @@ class ContactHelper:
         alert.accept()
         self.contact_cache = None
 
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        # нажимаем кнопку edit для заданной по индексу строки из списка контактов
+        wd.find_element(by=By.CSS_SELECTOR, value="input[id='%s']" % id).click()
+
     def press_edit_button_contact_by_id(self, id):
         wd = self.app.wd
         # нажимаем кнопку edit для заданной по id строки из списка контактов
