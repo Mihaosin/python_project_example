@@ -46,10 +46,11 @@ class DbFixture:
                 (id) = row
                 contacts_id.append(str(list(id)[0]))
             contacts = []
-            cursor.execute("select id, lastname, firstname from addressbook where id in (" + ','.join(contacts_id) + ")")
-            for row in cursor:
-                (id, lastname, firstname) = row
-                contacts.append(Contact(id=str(id), lastname=lastname, firstname=firstname))
+            if len(contacts_id) > 0:
+                cursor.execute("select id, lastname, firstname from addressbook where id in (" + ','.join(contacts_id) + ")")
+                for row in cursor:
+                    (id, lastname, firstname) = row
+                    contacts.append(Contact(id=str(id), lastname=lastname, firstname=firstname))
         finally:
             cursor.close()
         return contacts

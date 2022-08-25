@@ -15,6 +15,7 @@ class ORMFixture:
         name = Optional(str, column='group_name')
         header = Optional(str, column='group_header')
         footer = Optional(str, column='group_footer')
+        # связь двух таблиц не работает
         contacts = Set(lambda: ORMFixture.ORMContact, table="address_in_groups", column="id", reverse="groups", lazy=True)
 
     class ORMContact(db.Entity):
@@ -23,6 +24,7 @@ class ORMFixture:
         firstname = Optional(str, column='firstname')
         lastname = Optional(str, column='lastname')
         deprecated = Optional(str, column='deprecated')
+        # связь двух таблиц не работает
         groups = Set(lambda: ORMFixture.ORMGroup, table="address_in_groups", column="group_id", reverse="contacts", lazy=True)
 
     def __init__(self, host, name, user, password):
@@ -39,6 +41,7 @@ class ORMFixture:
     def get_group_list(self):
         return self.convert_groups_to_model(select(g for g in ORMFixture.ORMGroup))
 
+    # не работает для связанных таблиц
     def convert_contacts_to_model(self, contacts):
         def convert(contact):
             return Contact(id=str(contact.id), firstname=contact.firstname, lastname=contact.lastname)
@@ -51,8 +54,9 @@ class ORMFixture:
         # return self.convert_contacts_to_model(select(c for c in ORMFixture.ORMContact))
         return self.convert_contacts_to_model(select(c for c in ORMFixture.ORMContact if c.deprecated is None))
 
-    @db_session
-    def get_contacts_in_group(self, group):
-        orm_group = list(select(g for g in ORMFixture.ORMGroup if g.id == group.id))[0]
-        qwe = self.convert_contacts_to_model(orm_group.contacts)
-        return qwe
+    # функция не доработана для связанных таблиц
+    # @db_session
+    # def get_contacts_in_group(self, group):
+    #     orm_group = list(select(g for g in ORMFixture.ORMGroup if g.id == group.id))[0]
+    #     qwe = self.convert_contacts_to_model(orm_group.contacts)
+    #     return qwe

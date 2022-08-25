@@ -95,7 +95,7 @@ class ContactHelper:
 
     def select_contact_by_id(self, id):
         wd = self.app.wd
-        # нажимаем кнопку edit для заданной по индексу строки из списка контактов
+        # нажимаем кнопку edit для заданной по id контакта
         wd.find_element(by=By.CSS_SELECTOR, value="input[id='%s']" % id).click()
 
     def press_edit_button_contact_by_id(self, id):
@@ -200,6 +200,14 @@ class ContactHelper:
             # подтверждение действия внутри всплывающего окна
             alert.accept()
 
+    def add_contact_to_group(self, contact, group):
+        wd = self.app.wd
+        self.app.open_home_page()
+        self.select_contact_by_id(contact.id)
+        # wd.find_element(by=By.CSS_SELECTOR, value="select[name='to_group']").click()
+        wd.find_element(by=By.CSS_SELECTOR, value="select[name='to_group']>option[value='%s']" % group.id).click()
+        wd.find_element(by=By.CSS_SELECTOR, value="input[value='Add to']").click()
+        pass
 
 # структура таблица контактов в HTML-коде главной страницы
 index_id = 0
