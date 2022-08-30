@@ -207,7 +207,15 @@ class ContactHelper:
         # wd.find_element(by=By.CSS_SELECTOR, value="select[name='to_group']").click()
         wd.find_element(by=By.CSS_SELECTOR, value="select[name='to_group']>option[value='%s']" % group.id).click()
         wd.find_element(by=By.CSS_SELECTOR, value="input[value='Add to']").click()
-        pass
+
+    def delete_contact_from_group(self, contact, group):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element(by=By.CSS_SELECTOR, value="select[name='group']>option[value='%s']" % group.id).click()
+        self.select_contact_by_id(contact.id)
+        wd.find_element(by=By.NAME, value="remove").click()
+
+
 
 # структура таблица контактов в HTML-коде главной страницы
 index_id = 0
