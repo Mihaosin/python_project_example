@@ -4,3 +4,4 @@ jsonpickle
 pony
 pymysql
 pytest-bdd
+pytest-allure-adaptor
