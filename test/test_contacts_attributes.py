@@ -36,6 +36,7 @@ def clear(s):
 
 
 def merge_phones_like_on_home_page(contact):
+    # сравниваем все номера телефона, кроме факса, так как факс на главной странице не отображается
     s1 = filter(lambda x: x is not None, [contact.homephone, contact.mobilephone, contact.workphone])
     s2 = map(lambda x: clear(x), s1)
     s3 = filter(lambda x: x !='', s2)
@@ -45,7 +46,7 @@ def merge_phones_like_on_home_page(contact):
 
 def merge_emails_like_on_home_page(contact):
     s1 = filter(lambda x: x is not None, [contact.mail1, contact.mail2, contact.mail3])
-    s2 = map(lambda x: clear(x), s1)
+    s2 = s1 #map(lambda x: clear(x), s1) не чистим e-mail
     s3 = filter(lambda x: x !='', s2)
     s4 = "\n".join(s3)
     return s4
