@@ -5,7 +5,7 @@ import os.path
 import json
 import jsonpickle
 import getopt
-import sy
+import sys
 
 
 try:
